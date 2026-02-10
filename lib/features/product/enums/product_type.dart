@@ -7,5 +7,5 @@ enum ProductType {
   newArrival,
   bestSelling,
   discountedProduct,
-  justForYou
+  justForYou, recommendedProduct
 }

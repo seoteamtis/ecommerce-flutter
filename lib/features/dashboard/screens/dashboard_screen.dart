@@ -23,6 +23,9 @@ import 'package:flutter_sixvalley_ecommerce/features/more/screens/more_screen_vi
 import 'package:flutter_sixvalley_ecommerce/features/order/screens/order_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../../search_product/screens/search_product_screen.dart';
+import '../../wishlist/screens/wishlist_screen.dart';
+
 class DashBoardScreen extends StatefulWidget {
   final int? pageIndex;
   const DashBoardScreen({super.key, required this.pageIndex});
@@ -73,21 +76,60 @@ class DashBoardScreenState extends State<DashBoardScreen> {
       FashionThemeHomePage.loadData(false);
     }
 
-      _screens = [
-        NavigationModel(
-          name: 'home',
-          icon: Images.homeImage,
-          screen: (splashController.configModel!.activeTheme == "default")
+      // _screens = [
+      //   NavigationModel(
+      //     name: 'home',
+      //     icon: Images.homeImage,
+      //     screen: (splashController.configModel!.activeTheme == "default")
+      //       ? const HomePage() : (splashController.configModel!.activeTheme == "theme_aster")
+      //       ? const AsterThemeHomeScreen(): const FashionThemeHomePage(),
+      //   ),
+      //
+      //   NavigationModel(name: 'inbox', icon: Images.messageImage, screen: InboxScreen(fromDashboard: true)),
+      //   NavigationModel(name: 'cart', icon: Images.cartArrowDownImage, screen: const CartScreen(showBackButton: false, fromDashboard: true), showCartIcon: true),
+      //   NavigationModel(name: 'orders', icon: Images.shoppingImage, screen:  const OrderScreen(isBacButtonExist: false, fromDashboard: true)),
+      //   NavigationModel(name: 'more', icon: Images.moreImage, screen:  const MoreScreen()),
+      // ];
+
+    _screens = [
+      // 1. Homepage (Gidi Logo)
+      NavigationModel(
+        name: '',
+        icon: Images.logoWithNameImage, // 'homeImage' ki jagah logo use karein
+        screen: (splashController.configModel!.activeTheme == "default")
             ? const HomePage() : (splashController.configModel!.activeTheme == "theme_aster")
             ? const AsterThemeHomeScreen(): const FashionThemeHomePage(),
-        ),
+      ),
 
-        NavigationModel(name: 'inbox', icon: Images.messageImage, screen: InboxScreen(fromDashboard: true)),
-        NavigationModel(name: 'cart', icon: Images.cartArrowDownImage, screen: const CartScreen(showBackButton: false, fromDashboard: true), showCartIcon: true),
-        NavigationModel(name: 'orders', icon: Images.shoppingImage, screen:  const OrderScreen(isBacButtonExist: false, fromDashboard: true)),
-        NavigationModel(name: 'more', icon: Images.moreImage, screen:  const MoreScreen()),
-      ];
+      // 2. Category Search (Pehle 'inbox' tha)
+      NavigationModel(
+        name: '',
+        icon: Images.search, // Search icon path
+        screen: const SearchScreen(), // Search screen import karni hogi
+      ),
 
+      // 3. Cart (Same rahega)
+      NavigationModel(
+        name: '',
+        icon: Images.cartArrowDownImage,
+        screen: const CartScreen(showBackButton: false, fromDashboard: true),
+        showCartIcon: true,
+      ),
+
+      // 4. Wishlist (Pehle 'orders' tha)
+      NavigationModel(
+        name: '',
+        icon: Images.wishlist, // Heart icon path
+        screen: const WishListScreen(), // Wishlist screen import karni hogi
+      ),
+
+      // 5. Profile (Pehle 'more' tha)
+      NavigationModel(
+        name: '',
+        icon: Images.user, // User/Profile icon path
+        screen: const MoreScreen(),
+      ),
+    ];
 
     NetworkInfo.checkConnectivity(context);
   }
@@ -114,7 +156,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
         key: _scaffoldKey,
 
         body: PageStorage(bucket: bucket, child: _screens[_pageIndex].screen),
-        bottomNavigationBar: Container(height: 68,
+        bottomNavigationBar: Container(height: 60,
           decoration: BoxDecoration(borderRadius: const BorderRadius.vertical(
               top: Radius.circular(Dimensions.paddingSizeLarge)),
             color: Theme.of(context).cardColor,

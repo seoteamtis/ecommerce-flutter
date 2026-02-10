@@ -146,14 +146,14 @@ class _HomePageState extends State<HomePage> {
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [
-            SliverAppBar(
-              floating: true,
-              elevation: 0,
-              centerTitle: false,
-              automaticallyImplyLeading: false,
-              backgroundColor: Theme.of(context).highlightColor,
-              title: Image.asset(Images.logoWithNameImage, height: 35),
-            ),
+            // SliverAppBar(
+            //   floating: true,
+            //   elevation: 0,
+            //   centerTitle: false,
+            //   automaticallyImplyLeading: false,
+            //   backgroundColor: Theme.of(context).highlightColor,
+            //   title: Image.asset(Images.logoWithNameImage, height: 35),
+            // ),
 
             SliverToBoxAdapter(child: Provider.of<SplashController>(context, listen: false).configModel!.announcement!.status == '1'?
             Consumer<SplashController>(
