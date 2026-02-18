@@ -230,15 +230,110 @@ class FeaturedProductWidget extends StatelessWidget {
                 ),
               ),
 
+              // CarouselSlider.builder(
+              //   options: CarouselOptions(
+              //     aspectRatio: 1.4,
+              //
+              //     viewportFraction: 0.48,
+              //
+              //     autoPlay: true,
+              //     enlargeCenterPage: false,
+              //
+              //     padEnds: false,
+              //
+              //     disableCenter: true,
+              //   ),
+              //   itemCount: featuredProductModel?.products?.length ?? 0,
+              //   itemBuilder: (context, index, next) {
+              //     final product = featuredProductModel!.products![index];
+              //
+              //     return Padding(
+              //       padding: EdgeInsets.only(
+              //         left: index == 0 ? 12.0 : 0.0,
+              //         right: 12.0,
+              //       ),
+              //       child: Container(
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.zero,
+              //           color: Theme.of(context).cardColor,
+              //         ),
+              //         child: Column(
+              //           crossAxisAlignment: CrossAxisAlignment.start,
+              //           children: [
+              //             // Image Section (flex: 3)
+              //             Expanded(
+              //               flex: 3,
+              //               child: ClipRRect(
+              //                 borderRadius: BorderRadius.zero,
+              //                 child: CustomImageWidget(
+              //                   image: '${product.thumbnailFullUrl?.path}',
+              //                   fit: BoxFit.cover,
+              //                   width: double.infinity,
+              //                   height: double.infinity,
+              //                 ),
+              //               ),
+              //             ),
+              //
+              //             // Details Section (flex: 1)
+              //             Expanded(
+              //               flex: 1,
+              //               child: Padding(
+              //                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 5),
+              //                 child: Column(
+              //                   mainAxisSize: MainAxisSize.min,
+              //                   crossAxisAlignment: CrossAxisAlignment.start,
+              //                   children: [
+              //                     Row(
+              //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //                       children: [
+              //                         Expanded(
+              //                           child: Text(
+              //                             PriceConverter.convertPrice(context, product.unitPrice,
+              //                               discountType: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountType : product.discountType,
+              //                               discount: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountAmount : product.discount,
+              //                             ),
+              //                             style: robotoBold.copyWith(color: Colors.black, fontSize: 15),
+              //                           ),
+              //                         ),
+              //                         // Heart Icon ditto placement
+              //                         SizedBox(
+              //                           height: 24, width: 24,
+              //                           child: FavouriteButtonWidget(
+              //                             backgroundColor: Colors.transparent,
+              //                             productId: product.id,
+              //                           ),
+              //                         ),
+              //                       ],
+              //                     ),
+              //                     const SizedBox(height: 2),
+              //                     Text(
+              //                       product.name ?? '',
+              //                       style: textRegular.copyWith(fontSize: 12, color: Colors.grey[600]),
+              //                       maxLines: 1,
+              //                       overflow: TextOverflow.ellipsis,
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     );
+              //   },
+              // ),
               CarouselSlider.builder(
                 options: CarouselOptions(
-                  aspectRatio: 1.4,
+                  // ✅ GAP FIX: 1.4 ya 1.45 aspectRatio rakhne se niche ka extra space nahi aayega
+                  aspectRatio: 1.45,
 
-                  viewportFraction: 0.48,
+                  // ✅ VIEWPORT FIX: 0.47 karne se card thoda narrow hoga aur left margin ke liye jagah banegi
+                  viewportFraction: 0.47,
 
                   autoPlay: true,
                   enlargeCenterPage: false,
 
+                  // ✅ ALIGNMENT: Pehla card left se hi start hona chahiye
                   padEnds: false,
 
                   disableCenter: true,
@@ -248,14 +343,26 @@ class FeaturedProductWidget extends StatelessWidget {
                   final product = featuredProductModel!.products![index];
 
                   return Padding(
+                    // ✅ LITTLE BIT LEFT MARGIN:
+                    // Index 0 (pehla card) ko 16.0 margin diya hai taaki wo kone se hat jaye.
+                    // Baki cards ke beech 10.0 ka premium gap rakha hai.
                     padding: EdgeInsets.only(
-                      left: index == 0 ? 12.0 : 0.0,
-                      right: 12.0,
+                      left: index == 0 ? 16.0 : 10.0,
+                      right: 0.0,
                     ),
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.zero,
+                        borderRadius: BorderRadius.zero, // Sharp corners
                         color: Theme.of(context).cardColor,
+                        // Halki shadow taaki card premium dikhe
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1),
+                            spreadRadius: 1,
+                            blurRadius: 3,
+                            offset: const Offset(0, 1),
+                          )
+                        ],
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,7 +385,7 @@ class FeaturedProductWidget extends StatelessWidget {
                           Expanded(
                             flex: 1,
                             child: Padding(
-                              padding: const EdgeInsets.fromLTRB(8, 8, 8, 5),
+                              padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -292,12 +399,12 @@ class FeaturedProductWidget extends StatelessWidget {
                                             discountType: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountType : product.discountType,
                                             discount: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountAmount : product.discount,
                                           ),
-                                          style: robotoBold.copyWith(color: Colors.black, fontSize: 15),
+                                          style: robotoBold.copyWith(color: Colors.black, fontSize: 14),
                                         ),
                                       ),
-                                      // Heart Icon ditto placement
+                                      // Heart Icon
                                       SizedBox(
-                                        height: 24, width: 24,
+                                        height: 22, width: 22,
                                         child: FavouriteButtonWidget(
                                           backgroundColor: Colors.transparent,
                                           productId: product.id,
@@ -308,7 +415,7 @@ class FeaturedProductWidget extends StatelessWidget {
                                   const SizedBox(height: 2),
                                   Text(
                                     product.name ?? '',
-                                    style: textRegular.copyWith(fontSize: 12, color: Colors.grey[600]),
+                                    style: textRegular.copyWith(fontSize: 11, color: Colors.grey[600]),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),

@@ -260,7 +260,7 @@ class _HomePageState extends State<HomePage> {
             SliverToBoxAdapter(
               child: const ClearanceListWidget(),
             ),
-            SliverToBoxAdapter(child: SizedBox(height: Dimensions.paddingSizeDefault)),
+            // SliverToBoxAdapter(child: SizedBox(height: Dimensions.paddingSizeDefault)),
 
 
             SliverToBoxAdapter(

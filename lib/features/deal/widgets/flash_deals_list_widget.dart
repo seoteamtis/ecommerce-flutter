@@ -280,16 +280,109 @@ class FlashDealsListWidget extends StatelessWidget {
           //   },
           // )
 
+          // CarouselSlider.builder(
+          //   options: CarouselOptions(
+          //     aspectRatio: 1.4,
+          //     viewportFraction: 0.48,
+          //
+          //     autoPlay: true,
+          //     enlargeCenterPage: false,
+          //
+          //     padEnds: false,
+          //
+          //     disableCenter: true,
+          //     onPageChanged: (index, reason) => flashDealController.setCurrentIndex(index),
+          //   ),
+          //   itemCount: flashDealController.flashDealList.length,
+          //   itemBuilder: (context, index, next) {
+          //     final product = flashDealController.flashDealList[index];
+          //
+          //     return Padding(
+          //       padding: EdgeInsets.only(
+          //         left: index == 0 ? 16.0 : 0.0,
+          //         right: 12.0,
+          //       ),
+          //       child: Container(
+          //         decoration: BoxDecoration(
+          //           borderRadius: BorderRadius.zero,
+          //           color: Theme.of(context).cardColor,
+          //         ),
+          //         child: Column(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //           children: [
+          //
+          //             Expanded(
+          //               flex: 3,
+          //               child: ClipRRect(
+          //                 borderRadius: BorderRadius.zero,
+          //                 child: CustomImageWidget(
+          //                   image: '${product.thumbnailFullUrl?.path}',
+          //                   fit: BoxFit.cover,
+          //                   width: double.infinity,
+          //                   height: double.infinity,
+          //                 ),
+          //               ),
+          //             ),
+          //
+          //             Expanded(
+          //               flex: 1,
+          //               child: Padding(
+          //                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 5),
+          //                 child: Column(
+          //                   mainAxisSize: MainAxisSize.min,
+          //                   crossAxisAlignment: CrossAxisAlignment.start,
+          //                   children: [
+          //                     Row(
+          //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //                       children: [
+          //                         Expanded(
+          //                           child: Text(
+          //                             PriceConverter.convertPrice(context, product.unitPrice,
+          //                               discountType: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountType : product.discountType,
+          //                               discount: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountAmount : product.discount,
+          //                             ),
+          //                             style: robotoBold.copyWith(color: Colors.black, fontSize: 15),
+          //                           ),
+          //                         ),
+          //                         // Heart Icon
+          //                         SizedBox(
+          //                           height: 28, width: 28,
+          //                           child: FavouriteButtonWidget(
+          //                             backgroundColor: Colors.transparent,
+          //                             productId: product.id,
+          //                           ),
+          //                         ),
+          //                       ],
+          //                     ),
+          //                     const SizedBox(height: 2),
+          //                     Text(
+          //                       product.name ?? '',
+          //                       style: textRegular.copyWith(fontSize: 12, color: Colors.grey[600]),
+          //                       maxLines: 1,
+          //                       overflow: TextOverflow.ellipsis,
+          //                     ),
+          //                   ],
+          //                 ),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     );
+          //   },
+          // )
+
           CarouselSlider.builder(
             options: CarouselOptions(
-              aspectRatio: 1.4,
-              viewportFraction: 0.48,
+              // ✅ ASPECT RATIO: 1.45-1.5 bottom gap ko puri tarah khatam kar dega
+              aspectRatio: 1.5,
+
+              // ✅ VIEWPORT: 0.47 se cards thode chote honge aur left side se space dikhega
+              viewportFraction: 0.47,
 
               autoPlay: true,
               enlargeCenterPage: false,
-
-              padEnds: false,
-
+              padEnds: false, // Pehla card left se start hoga
               disableCenter: true,
               onPageChanged: (index, reason) => flashDealController.setCurrentIndex(index),
             ),
@@ -298,19 +391,23 @@ class FlashDealsListWidget extends StatelessWidget {
               final product = flashDealController.flashDealList[index];
 
               return Padding(
+                // ✅ LEFT MARGIN FIX:
+                // index == 0 (pehla card) ko 16.0 margin diya hai taaki wo kone se hat jaye.
+                // Baki saare cards ke beech 12.0 ka premium gap rakha hai.
                 padding: EdgeInsets.only(
-                  left: index == 0 ? 16.0 : 0.0,
-                  right: 12.0,
+                  left: index == 0 ? 16.0 : 8.0,
+                  right: 8.0,
                 ),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.zero,
                     color: Theme.of(context).cardColor,
+                    // Halki si shadow taaki card alag dikhe
+                    boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.1), spreadRadius: 1, blurRadius: 3)],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       Expanded(
                         flex: 3,
                         child: ClipRRect(
@@ -327,7 +424,7 @@ class FlashDealsListWidget extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 8, 8, 5),
+                          padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -341,12 +438,11 @@ class FlashDealsListWidget extends StatelessWidget {
                                         discountType: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountType : product.discountType,
                                         discount: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountAmount : product.discount,
                                       ),
-                                      style: robotoBold.copyWith(color: Colors.black, fontSize: 15),
+                                      style: robotoBold.copyWith(color: Colors.black, fontSize: 14),
                                     ),
                                   ),
-                                  // Heart Icon
                                   SizedBox(
-                                    height: 28, width: 28,
+                                    height: 24, width: 24,
                                     child: FavouriteButtonWidget(
                                       backgroundColor: Colors.transparent,
                                       productId: product.id,
@@ -357,7 +453,7 @@ class FlashDealsListWidget extends StatelessWidget {
                               const SizedBox(height: 2),
                               Text(
                                 product.name ?? '',
-                                style: textRegular.copyWith(fontSize: 12, color: Colors.grey[600]),
+                                style: textRegular.copyWith(fontSize: 11, color: Colors.grey[600]),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -371,7 +467,6 @@ class FlashDealsListWidget extends StatelessWidget {
               );
             },
           )
-
               : const SizedBox() : const FlashDealShimmer();
 
         }) : Consumer<FlashDealController>(

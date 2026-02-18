@@ -66,7 +66,8 @@ ThemeData light({Color? primaryColor, Color? secondaryColor}) => ThemeData(
   splashColor: Colors.transparent,
   cardColor: Colors.white,
 
-  scaffoldBackgroundColor: const Color(0xFFF7F8FA),
+  // scaffoldBackgroundColor: const Color(0xFFF7F8FA),
+  scaffoldBackgroundColor: const Color(0xFFFFFFFF),
 
   textTheme: TextTheme(
     bodyLarge: const TextStyle(color: Color(0xFF222324)),

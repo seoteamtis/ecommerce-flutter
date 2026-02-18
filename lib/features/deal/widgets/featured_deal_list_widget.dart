@@ -280,19 +280,113 @@ class FeaturedDealsListWidget extends StatelessWidget {
           //     );
           //   },
           // )
+          // CarouselSlider.builder(
+          //   options: CarouselOptions(
+          //
+          //       aspectRatio: 1.4,
+          //
+          //
+          //       viewportFraction: 0.48,
+          //
+          //       autoPlay: true,
+          //       enlargeCenterPage: false,
+          //
+          //       padEnds: false,
+          //
+          //       disableCenter: true,
+          //       onPageChanged: (index, reason) => featuredDealProvider.changeSelectedIndex(index)
+          //   ),
+          //   itemCount: featuredDealProvider.featuredDealProductList?.length,
+          //   itemBuilder: (context, index, _) {
+          //     final product = featuredDealProvider.featuredDealProductList![index];
+          //
+          //     return Padding(
+          //       padding: EdgeInsets.only(
+          //         left: index == 0 ? 12.0 : 0.0,
+          //         right: 12.0,
+          //       ),
+          //       child: Container(
+          //         decoration: BoxDecoration(
+          //           borderRadius: BorderRadius.zero,
+          //           color: Theme.of(context).cardColor,
+          //         ),
+          //         child: Column(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //           children: [
+          //             // Image Section (flex: 3)
+          //             Expanded(
+          //               flex: 3,
+          //               child: ClipRRect(
+          //                 borderRadius: BorderRadius.zero,
+          //                 child: CustomImageWidget(
+          //                   image: '${product.thumbnailFullUrl?.path}',
+          //                   fit: BoxFit.cover,
+          //                   width: double.infinity,
+          //                   height: double.infinity,
+          //                 ),
+          //               ),
+          //             ),
+          //
+          //             // Details Section (flex: 1)
+          //             Expanded(
+          //               flex: 1,
+          //               child: Padding(
+          //                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 5),
+          //                 child: Column(
+          //                   mainAxisSize: MainAxisSize.min,
+          //                   crossAxisAlignment: CrossAxisAlignment.start,
+          //                   children: [
+          //                     Row(
+          //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //                       children: [
+          //                         Expanded(
+          //                           child: Text(
+          //                             PriceConverter.convertPrice(context, product.unitPrice,
+          //                               discountType: product.discountType,
+          //                               discount: product.discount,
+          //                             ),
+          //                             style: robotoBold.copyWith(color: Colors.black, fontSize: 15),
+          //                           ),
+          //                         ),
+          //
+          //                         SizedBox(
+          //                           height: 24, width: 24,
+          //                           child: FavouriteButtonWidget(
+          //                             backgroundColor: Colors.transparent,
+          //                             productId: product.id,
+          //                           ),
+          //                         ),
+          //                       ],
+          //                     ),
+          //                     const SizedBox(height: 2),
+          //                     Text(
+          //                       product.name ?? '',
+          //                       style: textRegular.copyWith(fontSize: 12, color: Colors.grey[600]),
+          //                       maxLines: 1,
+          //                       overflow: TextOverflow.ellipsis,
+          //                     ),
+          //                   ],
+          //                 ),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     );
+          //   },
+          // )
+
           CarouselSlider.builder(
             options: CarouselOptions(
+              // ✅ GAP FIX: 1.55 aspectRatio niche waale extra space (red line) ko kam karega
+                aspectRatio: 1.65,
 
-                aspectRatio: 1.4,
-
-
-                viewportFraction: 0.48,
+                // ✅ VIEWPORT FIX: 0.47 se cards thode compact honge jisse left margin ki jagah banegi
+                viewportFraction: 0.47,
 
                 autoPlay: true,
                 enlargeCenterPage: false,
-
                 padEnds: false,
-
                 disableCenter: true,
                 onPageChanged: (index, reason) => featuredDealProvider.changeSelectedIndex(index)
             ),
@@ -301,19 +395,21 @@ class FeaturedDealsListWidget extends StatelessWidget {
               final product = featuredDealProvider.featuredDealProductList![index];
 
               return Padding(
+                // ✅ LEFT MARGIN UPDATE:
+                // Pehle card (index == 0) ko humne 16.0 ka margin diya hai taaki wo screen se hat jaye.
+                // Baki cards ke beech 10.0 ka premium gap rakha hai.
                 padding: EdgeInsets.only(
-                  left: index == 0 ? 12.0 : 0.0,
-                  right: 12.0,
+                  left: index == 0 ? 16.0 : 10.0,
+                  right: 0.0,
                 ),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.zero,
+                    borderRadius: BorderRadius.zero, // Sharp corners as per design
                     color: Theme.of(context).cardColor,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Image Section (flex: 3)
                       Expanded(
                         flex: 3,
                         child: ClipRRect(
@@ -327,11 +423,10 @@ class FeaturedDealsListWidget extends StatelessWidget {
                         ),
                       ),
 
-                      // Details Section (flex: 1)
                       Expanded(
                         flex: 1,
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 8, 8, 5),
+                          padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -345,12 +440,11 @@ class FeaturedDealsListWidget extends StatelessWidget {
                                         discountType: product.discountType,
                                         discount: product.discount,
                                       ),
-                                      style: robotoBold.copyWith(color: Colors.black, fontSize: 15),
+                                      style: robotoBold.copyWith(color: Colors.black, fontSize: 14),
                                     ),
                                   ),
-
                                   SizedBox(
-                                    height: 24, width: 24,
+                                    height: 22, width: 22,
                                     child: FavouriteButtonWidget(
                                       backgroundColor: Colors.transparent,
                                       productId: product.id,
@@ -361,7 +455,7 @@ class FeaturedDealsListWidget extends StatelessWidget {
                               const SizedBox(height: 2),
                               Text(
                                 product.name ?? '',
-                                style: textRegular.copyWith(fontSize: 12, color: Colors.grey[600]),
+                                style: textRegular.copyWith(fontSize: 11, color: Colors.grey[600]),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -375,7 +469,6 @@ class FeaturedDealsListWidget extends StatelessWidget {
               );
             },
           )
-
               : const SizedBox() : const FindWhatYouNeedShimmer();
         }):
 
