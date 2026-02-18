@@ -12,56 +12,320 @@ import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dar
 import 'package:flutter_sixvalley_ecommerce/utill/dimensions.dart';
 import 'package:provider/provider.dart';
 
+import '../../../common/basewidget/custom_image_widget.dart';
+import '../../../helper/price_converter.dart';
+import '../../../utill/custom_themes.dart';
+import '../../product_details/widgets/favourite_button_widget.dart';
+
+// class FeaturedProductWidget extends StatelessWidget {
+//   const FeaturedProductWidget({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final screenWidth = MediaQuery.of(context).size.width;
+//     final isTablet = ResponsiveHelper.isTab(context);
+//
+//     final viewportFraction = isTablet ? 0.4 : 0.6;
+//
+//     return Selector<ProductController, ProductModel?>(
+//       selector: (ctx, productController)=> productController.featuredProductModel,
+//         builder: (context, featuredProductModel, _) {
+//       return (featuredProductModel?.products?.isNotEmpty ?? false)  ? ColoredBox(
+//         color: Theme.of(context).colorScheme.onTertiary,
+//         child: Column(children: [
+//           Padding(
+//             padding: const EdgeInsets.symmetric(
+//               horizontal: 0,
+//               vertical: Dimensions.paddingSizeExtraSmall,
+//             ),
+//             child: TitleRowWidget(
+//               title: getTranslated('featured_products', context),
+//               onTap: () => RouterHelper.getViewAllProductScreenRoute(productType: ProductType.featuredProduct, action: RouteAction.push),
+//             ),
+//           ),
+//
+//           SizedBox(
+//             height: ResponsiveHelper.isTab(context)? MediaQuery.of(context).size.width * .58 : 295,
+//             child: CarouselSlider.builder(
+//               options: CarouselOptions(
+//                 viewportFraction: viewportFraction,
+//                 // autoPlay: true,
+//                 pauseAutoPlayOnTouch: true,
+//                 pauseAutoPlayOnManualNavigate: true,
+//                 enlargeFactor: 0.3,
+//                 enlargeCenterPage: true,
+//                 pauseAutoPlayInFiniteScroll: true,
+//                 disableCenter: true,
+//               ),
+//               itemCount: featuredProductModel?.products?.length ?? 0,
+//               itemBuilder: (context, index, next) {
+//                 return ProductWidget(productModel: featuredProductModel!.products![index], productNameLine: 1, margin: 0,);
+//               },
+//             ),
+//           ),
+//
+//           SizedBox(height: Dimensions.paddingSizeExtraSmall)
+//         ]),
+//       ) : featuredProductModel == null ? const SliderProductShimmerWidget() : const SizedBox();
+//     });
+//   }
+// }
+
+
+// class FeaturedProductWidget extends StatelessWidget {
+//   const FeaturedProductWidget({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final isTablet = ResponsiveHelper.isTab(context);
+//     final viewportFraction = isTablet ? 0.35 : 0.52;
+//
+//     return Selector<ProductController, ProductModel?>(
+//         selector: (ctx, productController)=> productController.featuredProductModel,
+//         builder: (context, featuredProductModel, _) {
+//           return (featuredProductModel?.products?.isNotEmpty ?? false)  ? ColoredBox(
+//             color: Theme.of(context).colorScheme.onTertiary,
+//             child: Column(children: [
+//               Padding(
+//                 padding: const EdgeInsets.symmetric(
+//                   horizontal: 0,
+//                   vertical: Dimensions.paddingSizeExtraSmall,
+//                 ),
+//                 child: TitleRowWidget(
+//                   title: getTranslated('featured_products', context),
+//                   onTap: () => RouterHelper.getViewAllProductScreenRoute(productType: ProductType.featuredProduct, action: RouteAction.push),
+//                 ),
+//               ),
+//
+//               SizedBox(
+//                 height: ResponsiveHelper.isTab(context)? MediaQuery.of(context).size.width * .58 : 285,
+//                 child: CarouselSlider.builder(
+//                   options: CarouselOptions(
+//                     viewportFraction: viewportFraction,
+//                     enlargeCenterPage: false, // ✅ Cards ek hi line mein rahenge
+//                     padEnds: false, // ✅ Pehla card left se shuru hoga
+//                     autoPlay: true,
+//                     pauseAutoPlayOnTouch: true,
+//                     pauseAutoPlayOnManualNavigate: true,
+//                     enlargeFactor: 0.0,
+//                     disableCenter: true,
+//                   ),
+//                   itemCount: featuredProductModel?.products?.length ?? 0,
+//                   itemBuilder: (context, index, next) {
+//                     // Code 1 ki details nikaalte hain
+//                     final product = featuredProductModel!.products![index];
+//
+//                     return Padding(
+//                       padding: const EdgeInsets.only(right: 8.0), // ✅ Cards ke beech ka perfect gap
+//                       child: Container(
+//                         // ✅ Code 1 wala design: Sharp corners aur card color
+//                         decoration: BoxDecoration(
+//                           borderRadius: BorderRadius.zero,
+//                           color: Theme.of(context).cardColor,
+//                         ),
+//                         child: Column(
+//                           crossAxisAlignment: CrossAxisAlignment.start,
+//                           children: [
+//
+//                             // ✅ Image Section (Code 1 Style)
+//                             Expanded(
+//                               child: ClipRRect(
+//                                 borderRadius: BorderRadius.zero,
+//                                 child: CustomImageWidget(
+//                                   image: '${product.thumbnailFullUrl?.path}',
+//                                   fit: BoxFit.cover,
+//                                   width: double.infinity,
+//                                   height: double.infinity,
+//                                 ),
+//                               ),
+//                             ),
+//
+//                             // ✅ Details Section (Code 1 Padding aur Logic)
+//                             Padding(
+//                               padding: const EdgeInsets.fromLTRB(5, 8, 5, 5),
+//                               child: Column(
+//                                 mainAxisSize: MainAxisSize.min,
+//                                 crossAxisAlignment: CrossAxisAlignment.start,
+//                                 children: [
+//                                   Row(
+//                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                     children: [
+//                                       Expanded(
+//                                         child: Text(
+//                                           PriceConverter.convertPrice(context, product.unitPrice,
+//                                             discountType: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountType : product.discountType,
+//                                             discount: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountAmount : product.discount,
+//                                           ),
+//                                           style: robotoBold.copyWith(
+//                                             color: Colors.black, // ✅ Premium dark price
+//                                             fontSize: 15,
+//                                           ),
+//                                         ),
+//                                       ),
+//
+//                                       // Heart Icon
+//                                       SizedBox(
+//                                         height: 28, width: 28,
+//                                         child: FavouriteButtonWidget(
+//                                           backgroundColor: Colors.transparent,
+//                                           productId: product.id,
+//                                         ),
+//                                       ),
+//                                     ],
+//                                   ),
+//
+//                                   const SizedBox(height: 2),
+//
+//                                   // Product Name
+//                                   Text(
+//                                     product.name ?? '',
+//                                     style: textRegular.copyWith(
+//                                       fontSize: 12,
+//                                       color: Colors.grey[600],
+//                                     ),
+//                                     maxLines: 1,
+//                                     overflow: TextOverflow.ellipsis,
+//                                   ),
+//                                 ],
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     );
+//                   },
+//                 ),
+//               ),
+//
+//               const SizedBox(height: Dimensions.paddingSizeExtraSmall)
+//             ]),
+//           ) : featuredProductModel == null ? const SliderProductShimmerWidget() : const SizedBox();
+//         });
+//   }
+// }
+
+
 class FeaturedProductWidget extends StatelessWidget {
   const FeaturedProductWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     final isTablet = ResponsiveHelper.isTab(context);
-
-    final viewportFraction = isTablet ? 0.4 : 0.6;
+    final viewportFraction = isTablet ? 0.35 : 0.50;
 
     return Selector<ProductController, ProductModel?>(
-      selector: (ctx, productController)=> productController.featuredProductModel,
+        selector: (ctx, productController)=> productController.featuredProductModel,
         builder: (context, featuredProductModel, _) {
-      return (featuredProductModel?.products?.isNotEmpty ?? false)  ? ColoredBox(
-        color: Theme.of(context).colorScheme.onTertiary,
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 0,
-              vertical: Dimensions.paddingSizeExtraSmall,
-            ),
-            child: TitleRowWidget(
-              title: getTranslated('featured_products', context),
-              onTap: () => RouterHelper.getViewAllProductScreenRoute(productType: ProductType.featuredProduct, action: RouteAction.push),
-            ),
-          ),
-
-          SizedBox(
-            height: ResponsiveHelper.isTab(context)? MediaQuery.of(context).size.width * .58 : 295,
-            child: CarouselSlider.builder(
-              options: CarouselOptions(
-                viewportFraction: viewportFraction,
-                // autoPlay: true,
-                pauseAutoPlayOnTouch: true,
-                pauseAutoPlayOnManualNavigate: true,
-                enlargeFactor: 0.3,
-                enlargeCenterPage: true,
-                pauseAutoPlayInFiniteScroll: true,
-                disableCenter: true,
+          return (featuredProductModel?.products?.isNotEmpty ?? false)  ? ColoredBox(
+            color: Theme.of(context).colorScheme.onTertiary,
+            child: Column(children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 0,
+                  vertical: Dimensions.paddingSizeExtraSmall,
+                ),
+                child: TitleRowWidget(
+                  title: getTranslated('featured_products', context),
+                  onTap: () => RouterHelper.getViewAllProductScreenRoute(productType: ProductType.featuredProduct, action: RouteAction.push),
+                ),
               ),
-              itemCount: featuredProductModel?.products?.length ?? 0,
-              itemBuilder: (context, index, next) {
-                return ProductWidget(productModel: featuredProductModel!.products![index], productNameLine: 1, margin: 0,);
-              },
-            ),
-          ),
 
-          SizedBox(height: Dimensions.paddingSizeExtraSmall)
-        ]),
-      ) : featuredProductModel == null ? const SliderProductShimmerWidget() : const SizedBox();
-    });
+              CarouselSlider.builder(
+                options: CarouselOptions(
+                  aspectRatio: 1.4,
+
+                  viewportFraction: 0.48,
+
+                  autoPlay: true,
+                  enlargeCenterPage: false,
+
+                  padEnds: false,
+
+                  disableCenter: true,
+                ),
+                itemCount: featuredProductModel?.products?.length ?? 0,
+                itemBuilder: (context, index, next) {
+                  final product = featuredProductModel!.products![index];
+
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      left: index == 0 ? 12.0 : 0.0,
+                      right: 12.0,
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.zero,
+                        color: Theme.of(context).cardColor,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Image Section (flex: 3)
+                          Expanded(
+                            flex: 3,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.zero,
+                              child: CustomImageWidget(
+                                image: '${product.thumbnailFullUrl?.path}',
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: double.infinity,
+                              ),
+                            ),
+                          ),
+
+                          // Details Section (flex: 1)
+                          Expanded(
+                            flex: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(8, 8, 8, 5),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          PriceConverter.convertPrice(context, product.unitPrice,
+                                            discountType: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountType : product.discountType,
+                                            discount: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountAmount : product.discount,
+                                          ),
+                                          style: robotoBold.copyWith(color: Colors.black, fontSize: 15),
+                                        ),
+                                      ),
+                                      // Heart Icon ditto placement
+                                      SizedBox(
+                                        height: 24, width: 24,
+                                        child: FavouriteButtonWidget(
+                                          backgroundColor: Colors.transparent,
+                                          productId: product.id,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    product.name ?? '',
+                                    style: textRegular.copyWith(fontSize: 12, color: Colors.grey[600]),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+
+              const SizedBox(height: Dimensions.paddingSizeExtraSmall)
+            ]),
+          ) : featuredProductModel == null ? const SliderProductShimmerWidget() : const SizedBox();
+        });
   }
 }

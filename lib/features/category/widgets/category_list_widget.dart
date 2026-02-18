@@ -87,10 +87,22 @@ class CategoryListWidget extends StatelessWidget {
         return Column(children: [
 
           // (a) Title and View All (As per image_016217.png)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault),
+          //   child: TitleRowWidget(
+          //     title: getTranslated('CATEGORIES', context), // Capitalized like image
+          //     onTap: () {
+          //       if(categoryProvider.categoryList.isNotEmpty) {
+          //         RouterHelper.getCategoryScreenRoute(action: RouteAction.push);
+          //       }
+          //     },
+          //   ),
+          // ),
+
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraExtraSmall),
             child: TitleRowWidget(
-              title: getTranslated('CATEGORIES', context), // Capitalized like image
+              title: getTranslated('CATEGORY', context),
               onTap: () {
                 if(categoryProvider.categoryList.isNotEmpty) {
                   RouterHelper.getCategoryScreenRoute(action: RouteAction.push);

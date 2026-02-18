@@ -125,11 +125,94 @@ class _BrandAndCategoryProductScreenState extends State<BrandAndCategoryProductS
         builder: (context, productController, child) {
           return Column(children: [
 
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeSmall).copyWith(right: Dimensions.paddingSizeDefault),
+            //   child: TextFormField(
+            //     controller: searchTextEditingController,
+            //     textInputAction: TextInputAction.search,
+            //     onChanged: (value) {
+            //       productController.setCategorySearchProductText(value);
+            //     },
+            //     onFieldSubmitted: (value) {
+            //       productController.initBrandOrCategoryProductList(
+            //         isBrand: widget.isBrand,
+            //         id: productController.selectedCategoryId,
+            //         searchProduct: searchTextEditingController.text.trim(),
+            //         offset: 1,
+            //         isUpdate: true,
+            //       );
+            //     },
+            //     style: textMedium.copyWith(fontSize: Dimensions.fontSizeLarge),
+            //     decoration: InputDecoration(
+            //         isDense: true,
+            //         contentPadding: const EdgeInsets.only(left: Dimensions.paddingSizeLarge),
+            //         border: OutlineInputBorder(
+            //             borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+            //             borderSide: BorderSide(color: Colors.grey[300]!)),
+            //         focusedBorder: OutlineInputBorder(
+            //             borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+            //             borderSide: BorderSide(color: Colors.grey[300]!)),
+            //         enabledBorder: OutlineInputBorder(
+            //             borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+            //             borderSide: BorderSide(color: Colors.grey[300]!)),
+            //         hintText: getTranslated('search_products', context),
+            //         hintStyle: textRegular.copyWith(color: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.9)),
+            //         suffixIcon: SizedBox(width: searchTextEditingController.text.isNotEmpty ? 70 : 50,
+            //           child: Row(children: [
+            //             if(searchTextEditingController.text.isNotEmpty)
+            //               InkWell(
+            //                 onTap: (){
+            //                   searchTextEditingController.clear();
+            //                   productController.setCategorySearchProductText('');
+            //
+            //                   productController.initBrandOrCategoryProductList(
+            //                     isBrand: widget.isBrand,
+            //                     id: productController.selectedCategoryId,
+            //                     offset: 1,
+            //                     isUpdate: true,
+            //                   );
+            //                 },
+            //                 child: const Icon(Icons.clear, size: 20,),
+            //               ),
+            //
+            //
+            //             InkWell(onTap: (){
+            //               if(searchTextEditingController.text.trim().isNotEmpty) {
+            //                 debounceHelper.run((){
+            //                   Provider.of<ProductController>(context, listen: false).initBrandOrCategoryProductList(
+            //                     isBrand: widget.isBrand,
+            //                     id: productController.selectedCategoryId,
+            //                     searchProduct: searchTextEditingController.text.trim(),
+            //                     offset: 1,
+            //                     isUpdate: true,
+            //                   );
+            //                 });
+            //               } else {
+            //                 showCustomSnackBarWidget(getTranslated('enter_somethings', context), Get.context!, snackBarType: SnackBarType.warning);
+            //               }
+            //             },
+            //               child: Container(
+            //                 margin: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+            //                 padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+            //                 decoration: BoxDecoration(
+            //                   color: Theme.of(context).primaryColor,
+            //                   borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+            //                 ),
+            //                 child: Image.asset(Images.search, color: Colors.white, height: Dimensions.iconSizeSmall, width: Dimensions.iconSizeSmall, fit: BoxFit.contain),
+            //               ),
+            //             ),
+            //           ]),
+            //         )
+            //     ),
+            //   ),
+            // ),
+
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeSmall).copyWith(right: Dimensions.paddingSizeDefault),
+              padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, vertical: Dimensions.paddingSizeSmall),
               child: TextFormField(
                 controller: searchTextEditingController,
                 textInputAction: TextInputAction.search,
+                textAlignVertical: TextAlignVertical.center, // Text ko vertically center karne ke liye
                 onChanged: (value) {
                   productController.setCategorySearchProductText(value);
                 },
@@ -145,62 +228,59 @@ class _BrandAndCategoryProductScreenState extends State<BrandAndCategoryProductS
                 style: textMedium.copyWith(fontSize: Dimensions.fontSizeLarge),
                 decoration: InputDecoration(
                     isDense: true,
-                    contentPadding: const EdgeInsets.only(left: Dimensions.paddingSizeLarge),
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeLarge, vertical: 10),
+
+                    // --- Pill Shape Borders ---
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+                        borderRadius: BorderRadius.circular(40),
                         borderSide: BorderSide(color: Colors.grey[300]!)),
                     focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+                        borderRadius: BorderRadius.circular(40),
                         borderSide: BorderSide(color: Colors.grey[300]!)),
                     enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+                        borderRadius: BorderRadius.circular(40),
                         borderSide: BorderSide(color: Colors.grey[300]!)),
+
                     hintText: getTranslated('search_products', context),
-                    hintStyle: textRegular.copyWith(color: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.9)),
-                    suffixIcon: SizedBox(width: searchTextEditingController.text.isNotEmpty ? 70 : 50,
-                      child: Row(children: [
+                    hintStyle: textRegular.copyWith(color: Theme.of(context).hintColor.withValues(alpha: 0.6)),
+
+                    // --- Right Side Blue Circle Button ---
+                    suffixIcon: SizedBox(width: searchTextEditingController.text.isNotEmpty ? 85 : 55,
+                      child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                         if(searchTextEditingController.text.isNotEmpty)
                           InkWell(
                             onTap: (){
                               searchTextEditingController.clear();
                               productController.setCategorySearchProductText('');
-
                               productController.initBrandOrCategoryProductList(
-                                isBrand: widget.isBrand,
-                                id: productController.selectedCategoryId,
-                                offset: 1,
-                                isUpdate: true,
-                              );
+                                  isBrand: widget.isBrand, id: productController.selectedCategoryId, offset: 1, isUpdate: true);
                             },
-                            child: const Icon(Icons.clear, size: 20,),
+                            child: const Icon(Icons.clear, size: 20, color: Colors.grey),
                           ),
-
 
                         InkWell(onTap: (){
                           if(searchTextEditingController.text.trim().isNotEmpty) {
                             debounceHelper.run((){
                               Provider.of<ProductController>(context, listen: false).initBrandOrCategoryProductList(
-                                isBrand: widget.isBrand,
-                                id: productController.selectedCategoryId,
-                                searchProduct: searchTextEditingController.text.trim(),
-                                offset: 1,
-                                isUpdate: true,
-                              );
+                                  isBrand: widget.isBrand, id: productController.selectedCategoryId,
+                                  searchProduct: searchTextEditingController.text.trim(), offset: 1, isUpdate: true);
                             });
                           } else {
                             showCustomSnackBarWidget(getTranslated('enter_somethings', context), Get.context!, snackBarType: SnackBarType.warning);
                           }
                         },
                           child: Container(
-                            margin: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                            padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+                            margin: const EdgeInsets.all(4),
+                            padding: const EdgeInsets.all(10),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle, // Square ko Circle bana diya
                             ),
-                            child: Image.asset(Images.search, color: Colors.white, height: Dimensions.iconSizeSmall, width: Dimensions.iconSizeSmall, fit: BoxFit.contain),
+                            child: Image.asset(Images.search, color: Colors.white, height: 18, width: 18, fit: BoxFit.contain),
                           ),
                         ),
+                        const SizedBox(width: 5), // Right side se thoda gap
                       ]),
                     )
                 ),

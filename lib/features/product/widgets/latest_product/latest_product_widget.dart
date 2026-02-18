@@ -212,7 +212,7 @@ class LatestProductWidget extends StatelessWidget {
         RouterHelper.getProductDetailsRoute(action: RouteAction.push, productId: productModel.id, slug: productModel.slug!);
       },
       child: Container(
-        margin: const EdgeInsets.all(5),
+        // margin: const EdgeInsets.all(5),
         child: Stack(
           children: [
             Column(
@@ -221,7 +221,8 @@ class LatestProductWidget extends StatelessWidget {
                 // 1. Badi Product Image (Aapki Image jaisi)
                 Expanded(
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+                    // borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+                    borderRadius: BorderRadius.zero,
                     child: Stack(
                       children: [
                         CustomImageWidget(
@@ -232,13 +233,13 @@ class LatestProductWidget extends StatelessWidget {
                         ),
 
                         // Favourite Button top right par
-                        Positioned(
-                          bottom: 10, right: 10,
-                          child: FavouriteButtonWidget(
-                            backgroundColor: Theme.of(context).cardColor.withOpacity(0.8),
-                            productId: productModel.id,
-                          ),
-                        ),
+                          // Positioned(
+                          //   bottom: 10, right: 10,
+                          //   child: FavouriteButtonWidget(
+                          //     backgroundColor: Theme.of(context).cardColor.withOpacity(0.8),
+                          //     productId: productModel.id,
+                          //   ),
+                          // ),
                       ],
                     ),
                   ),
@@ -247,24 +248,74 @@ class LatestProductWidget extends StatelessWidget {
                 const SizedBox(height: 8),
 
                 // 2. Price Section (Aapki photo jaisa bottom left alignment)
+                // Row(
+                //   children: [
+                //     Text(
+                //       PriceConverter.convertPrice(context, productModel.unitPrice,
+                //           discountType: productModel.discountType,
+                //           discount: productModel.discount),
+                //       style: textBold.copyWith(fontSize: Dimensions.fontSizeDefault),
+                //     ),
+                //     const SizedBox(width: 5),
+                //     if(productModel.discount! > 0)
+                //       Text(
+                //         PriceConverter.convertPrice(context, productModel.unitPrice),
+                //         style: textRegular.copyWith(
+                //           color: Theme.of(context).hintColor,
+                //           decoration: TextDecoration.lineThrough,
+                //           fontSize: Dimensions.fontSizeExtraSmall,
+                //         ),
+                //       ),
+                //   ],
+                // ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      PriceConverter.convertPrice(context, productModel.unitPrice,
-                          discountType: productModel.discountType,
-                          discount: productModel.discount),
-                      style: textBold.copyWith(fontSize: Dimensions.fontSizeDefault),
-                    ),
-                    const SizedBox(width: 5),
-                    if(productModel.discount! > 0)
-                      Text(
-                        PriceConverter.convertPrice(context, productModel.unitPrice),
-                        style: textRegular.copyWith(
-                          color: Theme.of(context).hintColor,
-                          decoration: TextDecoration.lineThrough,
-                          fontSize: Dimensions.fontSizeExtraSmall,
-                        ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // --- Price Section ---
+                          Row(
+                            children: [
+                              Text(
+                                PriceConverter.convertPrice(context, productModel.unitPrice,
+                                    discountType: productModel.discountType,
+                                    discount: productModel.discount),
+                                style: textBold.copyWith(fontSize: Dimensions.fontSizeDefault),
+                              ),
+                              const SizedBox(width: 5),
+                              if(productModel.discount! > 0)
+                                Text(
+                                  PriceConverter.convertPrice(context, productModel.unitPrice),
+                                  style: textRegular.copyWith(
+                                    color: Theme.of(context).hintColor,
+                                    decoration: TextDecoration.lineThrough,
+                                    fontSize: Dimensions.fontSizeExtraSmall,
+                                  ),
+                                ),
+                            ],
+                          ),
+
+                          // --- Product Name ---
+                          Text(
+                            productModel.name ?? '',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: textRegular.copyWith(
+                              fontSize: Dimensions.fontSizeSmall,
+                              color: Theme.of(context).hintColor,
+                            ),
+                          ),
+                        ],
                       ),
+                    ),
+
+                    // ✅ Heart Icon jo ab bottom-right mein aayega
+                    FavouriteButtonWidget(
+                      backgroundColor: Colors.transparent,
+                      productId: productModel.id,
+                    ),
                   ],
                 ),
 

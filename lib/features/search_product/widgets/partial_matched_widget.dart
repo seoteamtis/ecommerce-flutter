@@ -88,77 +88,144 @@ class _SearchSuggestionState extends State<SearchSuggestion> {
                     print(selectedString);
                   }
                 },
+                // fieldViewBuilder: (context, controller, focusNode, onEditingComplete) {
+                //   searchProvider.searchController = controller;
+                //   searchProvider.searchFocusNode = focusNode;
+                //
+                //   return Hero(
+                //     tag: 'search',
+                //     child: Material(child: TextFormField(
+                //         controller: controller,
+                //         focusNode: searchProvider.searchFocusNode,
+                //         textInputAction: TextInputAction.search,
+                //         onChanged: (val){
+                //           if(val.isNotEmpty){
+                //             searchProvider.getSuggestionProductName(searchProvider.searchController.text.trim());
+                //           }
+                //         },
+                //         onFieldSubmitted: (value) {
+                //           if(controller.text.trim().isNotEmpty) {
+                //             searchProvider.saveSearchAddress( controller.text.toString());
+                //             searchProvider.searchProduct(query : controller.text.toString(), offset: 1);
+                //           }else{
+                //             showCustomSnackBarWidget(getTranslated('enter_somethings', context), context, snackBarType: SnackBarType.warning);
+                //           }
+                //         },
+                //
+                //         style: textMedium.copyWith(fontSize: Dimensions.fontSizeLarge),
+                //         decoration: InputDecoration(
+                //           isDense: true,
+                //           contentPadding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                //           border: OutlineInputBorder(
+                //             borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
+                //             borderSide: BorderSide(color: Colors.grey[300]!)),
+                //           focusedBorder: OutlineInputBorder(
+                //             borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
+                //             borderSide: BorderSide(color: Colors.grey[300]!)),
+                //           enabledBorder: OutlineInputBorder(
+                //             borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
+                //             borderSide: BorderSide(color: Colors.grey[300]!)),
+                //           hintText: getTranslated('search_product', context),
+                //          suffixIcon: SizedBox(width: controller.text.isNotEmpty? 70 : 50,
+                //            child: Row(children: [
+                //                if(controller.text.isNotEmpty)
+                //                InkWell(onTap: (){
+                //                  setState(() {
+                //                    controller.clear();
+                //                    searchProvider.cleanSearchProduct(notify: true);
+                //                  });
+                //                }, child: const Icon(Icons.clear, size: 20,)),
+                //
+                //
+                //                InkWell(onTap: (){
+                //                    if(controller.text.trim().isNotEmpty) {
+                //                      focusNode.unfocus();
+                //                        searchProvider.saveSearchAddress( controller.text.toString());
+                //                        searchProvider.searchProduct( query : controller.text.toString(), offset: 1);
+                //
+                //                    }else{
+                //                      showCustomSnackBarWidget(getTranslated('enter_somethings', context), context, snackBarType: SnackBarType.warning);
+                //                    }
+                //                  },
+                //                  child: Padding(padding: const EdgeInsets.all(5),
+                //                    child: Container(width: 40, height: 50,decoration: BoxDecoration(color: Theme.of(context).primaryColor,
+                //                        borderRadius: const BorderRadius.all( Radius.circular(Dimensions.paddingSizeSmall))),
+                //                        child: SizedBox(width : 18,height: 18, child: Padding(
+                //                          padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
+                //                          child: Image.asset(Images.search, color: Colors.white),
+                //                        ))),
+                //                  ),
+                //                ),
+                //              ],
+                //            ),
+                //          )
+                //         ),
+                //       ),
+                //     ),
+                //   );
+                // },
+
                 fieldViewBuilder: (context, controller, focusNode, onEditingComplete) {
                   searchProvider.searchController = controller;
                   searchProvider.searchFocusNode = focusNode;
 
                   return Hero(
                     tag: 'search',
-                    child: Material(child: TextFormField(
+                    child: Material(
+                      color: Colors.transparent, // Background transparent rakha hai
+                      child: TextFormField(
                         controller: controller,
                         focusNode: searchProvider.searchFocusNode,
                         textInputAction: TextInputAction.search,
-                        onChanged: (val){
-                          if(val.isNotEmpty){
+                        onChanged: (val) {
+                          if (val.isNotEmpty) {
                             searchProvider.getSuggestionProductName(searchProvider.searchController.text.trim());
                           }
                         },
                         onFieldSubmitted: (value) {
-                          if(controller.text.trim().isNotEmpty) {
-                            searchProvider.saveSearchAddress( controller.text.toString());
-                            searchProvider.searchProduct(query : controller.text.toString(), offset: 1);
-                          }else{
-                            showCustomSnackBarWidget(getTranslated('enter_somethings', context), context, snackBarType: SnackBarType.warning);
+                          if (controller.text.trim().isNotEmpty) {
+                            searchProvider.saveSearchAddress(controller.text.toString());
+                            searchProvider.searchProduct(query: controller.text.toString(), offset: 1);
                           }
                         },
-
-                        style: textMedium.copyWith(fontSize: Dimensions.fontSizeLarge),
+                        style: textRegular.copyWith(fontSize: Dimensions.fontSizeDefault),
+                        textAlignVertical: TextAlignVertical.center, // Text ko vertical center karne ke liye
                         decoration: InputDecoration(
                           isDense: true,
-                          contentPadding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                          filled: true,
+                          fillColor: const Color(0xFFF2F2F2), // Exact light grey color
+                          hintText: 'Search', // Image mein sirf Search likha hai
+                          hintStyle: textRegular.copyWith(color: Colors.grey[600], fontSize: 16),
+
+                          // Left side Search Icon (Padding ke sath taaki thoda center dikhe)
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 5),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.search, color: Colors.black.withOpacity(0.7), size: 20),
+                              ],
+                            ),
+                          ),
+
+                          // Right side Camera Icon
+                          suffixIcon: const Icon(Icons.camera_alt_outlined, color: Colors.black87, size: 20),
+
+                          // Pill Shape Design (Round Corners)
+                          contentPadding: const EdgeInsets.symmetric(vertical: 12),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
-                            borderSide: BorderSide(color: Colors.grey[300]!)),
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide.none,
+                          ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
-                            borderSide: BorderSide(color: Colors.grey[300]!)),
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide.none,
+                          ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
-                            borderSide: BorderSide(color: Colors.grey[300]!)),
-                          hintText: getTranslated('search_product', context),
-                         suffixIcon: SizedBox(width: controller.text.isNotEmpty? 70 : 50,
-                           child: Row(children: [
-                               if(controller.text.isNotEmpty)
-                               InkWell(onTap: (){
-                                 setState(() {
-                                   controller.clear();
-                                   searchProvider.cleanSearchProduct(notify: true);
-                                 });
-                               }, child: const Icon(Icons.clear, size: 20,)),
-
-
-                               InkWell(onTap: (){
-                                   if(controller.text.trim().isNotEmpty) {
-                                     focusNode.unfocus();
-                                       searchProvider.saveSearchAddress( controller.text.toString());
-                                       searchProvider.searchProduct( query : controller.text.toString(), offset: 1);
-
-                                   }else{
-                                     showCustomSnackBarWidget(getTranslated('enter_somethings', context), context, snackBarType: SnackBarType.warning);
-                                   }
-                                 },
-                                 child: Padding(padding: const EdgeInsets.all(5),
-                                   child: Container(width: 40, height: 50,decoration: BoxDecoration(color: Theme.of(context).primaryColor,
-                                       borderRadius: const BorderRadius.all( Radius.circular(Dimensions.paddingSizeSmall))),
-                                       child: SizedBox(width : 18,height: 18, child: Padding(
-                                         padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
-                                         child: Image.asset(Images.search, color: Colors.white),
-                                       ))),
-                                 ),
-                               ),
-                             ],
-                           ),
-                         )
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide.none,
+                          ),
                         ),
                       ),
                     ),

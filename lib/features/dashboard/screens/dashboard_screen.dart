@@ -95,20 +95,18 @@ class DashBoardScreenState extends State<DashBoardScreen> {
       // 1. Homepage (Gidi Logo)
       NavigationModel(
         name: '',
-        icon: Images.logoWithNameImage, // 'homeImage' ki jagah logo use karein
+        icon: Images.logoWithNameImage,
         screen: (splashController.configModel!.activeTheme == "default")
             ? const HomePage() : (splashController.configModel!.activeTheme == "theme_aster")
             ? const AsterThemeHomeScreen(): const FashionThemeHomePage(),
       ),
 
-      // 2. Category Search (Pehle 'inbox' tha)
       NavigationModel(
         name: '',
-        icon: Images.search, // Search icon path
-        screen: const SearchScreen(), // Search screen import karni hogi
+        icon: Images.search,
+        screen: const SearchScreen(),
       ),
 
-      // 3. Cart (Same rahega)
       NavigationModel(
         name: '',
         icon: Images.cartArrowDownImage,
@@ -116,17 +114,15 @@ class DashBoardScreenState extends State<DashBoardScreen> {
         showCartIcon: true,
       ),
 
-      // 4. Wishlist (Pehle 'orders' tha)
       NavigationModel(
         name: '',
-        icon: Images.wishlist, // Heart icon path
-        screen: const WishListScreen(), // Wishlist screen import karni hogi
+        icon: Images.wishlist,
+        screen: const WishListScreen(),
       ),
 
-      // 5. Profile (Pehle 'more' tha)
       NavigationModel(
         name: '',
-        icon: Images.user, // User/Profile icon path
+        icon: Images.user,
         screen: const MoreScreen(),
       ),
     ];

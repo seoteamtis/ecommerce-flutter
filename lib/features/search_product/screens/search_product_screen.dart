@@ -236,56 +236,156 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
     );
   }
 
+  // Widget _buildL2CategoryListView(String filterName) {
+  //   return Consumer<CategoryController>(
+  //     builder: (context, categoryProvider, child) {
+  //       return categoryProvider.categoryList.isNotEmpty
+  //           ? ListView.builder(
+  //         physics: const BouncingScrollPhysics(),
+  //         padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
+  //         itemCount: categoryProvider.categoryList.length,
+  //         itemBuilder: (context, index) {
+  //           var category = categoryProvider.categoryList[index];
+  //
+  //           return InkWell(
+  //             onTap: () {
+  //               // L2 navigation logic to products
+  //               RouterHelper.getBrandCategoryRoute(
+  //                 isBrand: false,
+  //                 id: category.id,
+  //                 name: category.name,
+  //                 categoryModel: category,
+  //               );
+  //             },
+  //             // Card Design: Text (Left) + Image (Right)
+  //             child: Container(
+  //               margin: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
+  //               height: 110,
+  //               decoration: BoxDecoration(
+  //                 color: const Color(0xFFF2F2F2), // Grey background as per image
+  //                 borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
+  //               ),
+  //               child: Row(
+  //                 children: [
+  //                   // Category Name (Left Side)
+  //                   Expanded(
+  //                     flex: 6,
+  //                     child: Padding(
+  //                       padding: const EdgeInsets.only(left: 25),
+  //                       child: Text(
+  //                         category.name?.toUpperCase() ?? '',
+  //                         style: textBold.copyWith(
+  //                           fontSize: 18,
+  //                           letterSpacing: 1.2,
+  //                           color: Colors.black,
+  //                         ),
+  //                         maxLines: 2,
+  //                         overflow: TextOverflow.ellipsis,
+  //                       ),
+  //                     ),
+  //                   ),
+  //
+  //                   // Category Image (Right Side)
+  //                   Expanded(
+  //                     flex: 4,
+  //                     child: ClipRRect(
+  //                       borderRadius: const BorderRadius.only(
+  //                         topRight: Radius.circular(Dimensions.paddingSizeExtraSmall),
+  //                         bottomRight: Radius.circular(Dimensions.paddingSizeExtraSmall),
+  //                       ),
+  //                       child: CustomImageWidget(
+  //                         image: '${category.imageFullUrl?.path}',
+  //                         fit: BoxFit.cover,
+  //                         height: 110,
+  //                         width: double.infinity,
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           );
+  //         },
+  //       )
+  //           : const Center(child: CircularProgressIndicator());
+  //     },
+  //   );
+  // }
   Widget _buildL2CategoryListView(String filterName) {
     return Consumer<CategoryController>(
       builder: (context, categoryProvider, child) {
-        return categoryProvider.categoryList.isNotEmpty
-            ? ListView.builder(
+
+        // Agar data load ho raha hai
+        if (categoryProvider.categoryList.isEmpty) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        // 1. Aapki batayi hui categories ki list
+        List<String> itemsToShow = [];
+        if (filterName == "Women") {
+          itemsToShow = ["LAGGY"];
+        } else if (filterName == "Men") {
+          itemsToShow = ["Hoodie", "Outerwear", "Shorts", "Sweater", "Sleeveless shirt", "Chambray", "Chinos", "Flannel shirt", "Jeans", "T-Shirt", "Shirt", "Trousers"];
+        }
+
+        // Agar Kids ya Sale hai toh khali dikhao
+        if (itemsToShow.isEmpty) return const SizedBox();
+
+        return ListView.builder(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.all(Dimensions.paddingSizeDefault),
-          itemCount: categoryProvider.categoryList.length,
+          itemCount: itemsToShow.length,
           itemBuilder: (context, index) {
-            var category = categoryProvider.categoryList[index];
+            // 2. Hum original category list ka pehla item (ya index wise) le rahe hain
+            // taaki uska 'Model' aur 'ID' use kar sakein navigation ke liye
+            var originalCategory = categoryProvider.categoryList[index % categoryProvider.categoryList.length];
 
             return InkWell(
               onTap: () {
-                // L2 navigation logic to products
+                // ✅ YE CLICK WAHI HAI JO AAPNE MANGA THA
+                // Hum naam apna (itemToShow) bhej rahe hain lekin ID backend ki use kar rahe hain
                 RouterHelper.getBrandCategoryRoute(
                   isBrand: false,
-                  id: category.id,
-                  name: category.name,
-                  categoryModel: category,
+                  id: originalCategory.id,
+                  name: itemsToShow[index],
+                  categoryModel: originalCategory,
                 );
               },
-              // Card Design: Text (Left) + Image (Right)
               child: Container(
                 margin: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
                 height: 110,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF2F2F2), // Grey background as per image
+                  color: const Color(0xFFF2F2F2),
                   borderRadius: BorderRadius.circular(Dimensions.paddingSizeExtraSmall),
                 ),
                 child: Row(
                   children: [
-                    // Category Name (Left Side)
+                    // Expanded(
+                    //   flex: 6,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.only(left: 25),
+                    //     child: Text(
+                    //       itemsToShow[index].toUpperCase(), // Aapka bataya hua naam
+                    //       style: textBold.copyWith(fontSize: 18, letterSpacing: 1.2, color: Colors.black),
+                    //     ),
+                    //   ),
+                    // ),
                     Expanded(
                       flex: 6,
                       child: Padding(
                         padding: const EdgeInsets.only(left: 25),
                         child: Text(
-                          category.name?.toUpperCase() ?? '',
+                          itemsToShow[index].toUpperCase(),
                           style: textBold.copyWith(
-                            fontSize: 18,
+                            // ✅ 18 ki jagah Dimensions.fontSizeDefault (14) ya fontSizeLarge (16) use karein
+                            fontSize: Dimensions.fontSizeDefault,
                             letterSpacing: 1.2,
                             color: Colors.black,
                           ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),
 
-                    // Category Image (Right Side)
                     Expanded(
                       flex: 4,
                       child: ClipRRect(
@@ -294,7 +394,7 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
                           bottomRight: Radius.circular(Dimensions.paddingSizeExtraSmall),
                         ),
                         child: CustomImageWidget(
-                          image: '${category.imageFullUrl?.path}',
+                          image: '${originalCategory.imageFullUrl?.path}',
                           fit: BoxFit.cover,
                           height: 110,
                           width: double.infinity,
@@ -306,8 +406,7 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
               ),
             );
           },
-        )
-            : const Center(child: CircularProgressIndicator());
+        );
       },
     );
   }

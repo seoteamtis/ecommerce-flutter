@@ -229,7 +229,7 @@ class _HomePageState extends State<HomePage> {
                         Stack(children: [
                           Container(
                             width: MediaQuery.of(context).size.width,
-                            height: 150,
+                            height: 110,
                             color: Provider.of<ThemeController>(context, listen: false).darkTheme ?
                             Theme.of(context).highlightColor
                                 : Theme.of(context).colorScheme.onTertiary,
@@ -250,7 +250,7 @@ class _HomePageState extends State<HomePage> {
                           ]),
                         ]),
 
-                        const SizedBox(height: Dimensions.paddingSizeDefault),
+                        // const SizedBox(height: Dimensions.paddingSizeDefault),
                       ],
                     ) : const SizedBox.shrink() : const FindWhatYouNeedShimmer();}
               ),
