@@ -237,7 +237,6 @@ class LatestProductListWidget extends StatelessWidget {
                                   ),
 
                                   SizedBox(
-                                    height: 24, width: 24,
                                     child: FavouriteButtonWidget(
                                       backgroundColor: Colors.transparent,
                                       productId: product.id,

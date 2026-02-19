@@ -88,6 +88,7 @@ import 'package:provider/provider.dart';
 import '../../../common/basewidget/custom_image_widget.dart';
 import '../../../helper/price_converter.dart';
 import '../../../utill/custom_themes.dart';
+import '../../../utill/dimensions.dart';
 import '../../product_details/widgets/favourite_button_widget.dart';
 
 // class FlashDealsListWidget extends StatelessWidget {
@@ -372,17 +373,112 @@ class FlashDealsListWidget extends StatelessWidget {
           //   },
           // )
 
+          // CarouselSlider.builder(
+          //   options: CarouselOptions(
+          //     // ✅ ASPECT RATIO: 1.45-1.5 bottom gap ko puri tarah khatam kar dega
+          //     aspectRatio: 1.5,
+          //
+          //     // ✅ VIEWPORT: 0.47 se cards thode chote honge aur left side se space dikhega
+          //     viewportFraction: 0.47,
+          //
+          //     autoPlay: true,
+          //     enlargeCenterPage: false,
+          //     padEnds: false, // Pehla card left se start hoga
+          //     disableCenter: true,
+          //     onPageChanged: (index, reason) => flashDealController.setCurrentIndex(index),
+          //   ),
+          //   itemCount: flashDealController.flashDealList.length,
+          //   itemBuilder: (context, index, next) {
+          //     final product = flashDealController.flashDealList[index];
+          //
+          //     return Padding(
+          //       // ✅ LEFT MARGIN FIX:
+          //       // index == 0 (pehla card) ko 16.0 margin diya hai taaki wo kone se hat jaye.
+          //       // Baki saare cards ke beech 12.0 ka premium gap rakha hai.
+          //       padding: EdgeInsets.only(
+          //         left: index == 0 ? 16.0 : 8.0,
+          //         right: 8.0,
+          //       ),
+          //       child: Container(
+          //         decoration: BoxDecoration(
+          //           borderRadius: BorderRadius.zero,
+          //           color: Theme.of(context).cardColor,
+          //           // Halki si shadow taaki card alag dikhe
+          //           boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.1), spreadRadius: 1, blurRadius: 3)],
+          //         ),
+          //         child: Column(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //           children: [
+          //             Expanded(
+          //               flex: 3,
+          //               child: ClipRRect(
+          //                 borderRadius: BorderRadius.zero,
+          //                 child: CustomImageWidget(
+          //                   image: '${product.thumbnailFullUrl?.path}',
+          //                   fit: BoxFit.cover,
+          //                   width: double.infinity,
+          //                   height: double.infinity,
+          //                 ),
+          //               ),
+          //             ),
+          //
+          //             Expanded(
+          //               flex: 1,
+          //               child: Padding(
+          //                 padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+          //                 child: Column(
+          //                   mainAxisSize: MainAxisSize.min,
+          //                   crossAxisAlignment: CrossAxisAlignment.start,
+          //                   children: [
+          //                     Row(
+          //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //                       children: [
+          //                         Expanded(
+          //                           child: Text(
+          //                             PriceConverter.convertPrice(context, product.unitPrice,
+          //                               discountType: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountType : product.discountType,
+          //                               discount: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountAmount : product.discount,
+          //                             ),
+          //                             style: robotoBold.copyWith(color: Colors.black, fontSize: 14),
+          //                           ),
+          //                         ),
+          //                         SizedBox(
+          //                           height: 24, width: 24,
+          //                           child: FavouriteButtonWidget(
+          //                             backgroundColor: Colors.transparent,
+          //                             productId: product.id,
+          //                           ),
+          //                         ),
+          //                       ],
+          //                     ),
+          //                     const SizedBox(height: 2),
+          //                     Text(
+          //                       product.name ?? '',
+          //                       style: textRegular.copyWith(fontSize: 11, color: Colors.grey[600]),
+          //                       maxLines: 1,
+          //                       overflow: TextOverflow.ellipsis,
+          //                     ),
+          //                   ],
+          //                 ),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     );
+          //   },
+          // )
           CarouselSlider.builder(
             options: CarouselOptions(
-              // ✅ ASPECT RATIO: 1.45-1.5 bottom gap ko puri tarah khatam kar dega
-              aspectRatio: 1.5,
+              // ✅ Code 1 ke barabar ratio: niche ka gap khatam ho jayega
+              aspectRatio: 1.4,
 
-              // ✅ VIEWPORT: 0.47 se cards thode chote honge aur left side se space dikhega
-              viewportFraction: 0.47,
+              // ✅ Viewport fraction match kiya taaki card ki width same dikhe
+              viewportFraction: 0.45,
 
               autoPlay: true,
               enlargeCenterPage: false,
-              padEnds: false, // Pehla card left se start hoga
+              padEnds: false, // Pehla card left se shuru hoga
               disableCenter: true,
               onPageChanged: (index, reason) => flashDealController.setCurrentIndex(index),
             ),
@@ -391,23 +487,20 @@ class FlashDealsListWidget extends StatelessWidget {
               final product = flashDealController.flashDealList[index];
 
               return Padding(
-                // ✅ LEFT MARGIN FIX:
-                // index == 0 (pehla card) ko 16.0 margin diya hai taaki wo kone se hat jaye.
-                // Baki saare cards ke beech 12.0 ka premium gap rakha hai.
+                // ✅ LEFT MARGIN MATCHED: Latest Product ke 16px margin se match karne ke liye
                 padding: EdgeInsets.only(
-                  left: index == 0 ? 16.0 : 8.0,
-                  right: 8.0,
+                  left: index == 0 ? Dimensions.paddingSizeDefault : 16.0,
+                  right: 0.0,
                 ),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.zero,
+                    borderRadius: BorderRadius.zero, // Sharp corners as per Code 1
                     color: Theme.of(context).cardColor,
-                    // Halki si shadow taaki card alag dikhe
-                    boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.1), spreadRadius: 1, blurRadius: 3)],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Image Section
                       Expanded(
                         flex: 3,
                         child: ClipRRect(
@@ -421,10 +514,12 @@ class FlashDealsListWidget extends StatelessWidget {
                         ),
                       ),
 
+                      // Details Section
                       Expanded(
                         flex: 1,
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
+                          // ✅ Details padding match ki gayi (5, 8, 5, 5)
+                          padding: const EdgeInsets.fromLTRB(5, 8, 5, 5),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -438,11 +533,11 @@ class FlashDealsListWidget extends StatelessWidget {
                                         discountType: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountType : product.discountType,
                                         discount: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountAmount : product.discount,
                                       ),
-                                      style: robotoBold.copyWith(color: Colors.black, fontSize: 14),
+                                      // ✅ Bold style aur 16 size as per Code 1
+                                      style: robotoBold.copyWith(color: Colors.black, fontSize: 16),
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 24, width: 24,
                                     child: FavouriteButtonWidget(
                                       backgroundColor: Colors.transparent,
                                       productId: product.id,
@@ -450,11 +545,12 @@ class FlashDealsListWidget extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 2),
+                              const SizedBox(height: 4),
                               Text(
                                 product.name ?? '',
-                                style: textRegular.copyWith(fontSize: 11, color: Colors.grey[600]),
-                                maxLines: 1,
+                                // ✅ Text regular aur 12 size as per Code 1
+                                style: textRegular.copyWith(fontSize: 12, color: Colors.grey[600]),
+                                maxLines: 2, // Latest Product ki tarah 2 lines
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ],

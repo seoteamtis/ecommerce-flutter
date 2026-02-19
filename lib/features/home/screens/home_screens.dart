@@ -230,9 +230,10 @@ class _HomePageState extends State<HomePage> {
                           Container(
                             width: MediaQuery.of(context).size.width,
                             height: 110,
-                            color: Provider.of<ThemeController>(context, listen: false).darkTheme ?
-                            Theme.of(context).highlightColor
-                                : Theme.of(context).colorScheme.onTertiary,
+                            // color: Provider.of<ThemeController>(context, listen: false).darkTheme ?
+                            // Theme.of(context).highlightColor
+                            //     : Theme.of(context).colorScheme.onTertiary,
+                            color: Theme.of(context).cardColor,
                           ),
 
                           Column(children: [

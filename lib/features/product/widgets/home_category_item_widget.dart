@@ -16,7 +16,8 @@ class HomeCategoryProductItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: index.isEven ? Theme.of(context).cardColor : Theme.of(context).colorScheme.onTertiary,
+      // color: index.isEven ? Theme.of(context).cardColor : Theme.of(context).colorScheme.onTertiary,
+      color: Theme.of(context).cardColor,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
 
         if(isHomePage) ...[
