@@ -536,7 +536,11 @@ class FeaturedDealsListWidget extends StatelessWidget {
                                         discount: product.discount,
                                       ),
                                       // Latest Product ki tarah Bold aur 16 size
-                                      style: robotoBold.copyWith(color: Colors.black, fontSize: 16),
+                                      // style: robotoBold.copyWith(color: Colors.black, fontSize: 16),
+                                      style: robotoBold.copyWith(
+                                        color: Theme.of(context).textTheme.bodyLarge?.color, // Isse black background par white dikhega
+                                        fontSize: 16,
+                                      ),
                                     ),
                                   ),
                                   SizedBox(
@@ -550,7 +554,11 @@ class FeaturedDealsListWidget extends StatelessWidget {
                               const SizedBox(height: 4),
                               Text(
                                 product.name ?? '',
-                                style: textRegular.copyWith(fontSize: 12, color: Colors.grey[600]),
+                                // style: textRegular.copyWith(fontSize: 12, color: Colors.grey[600]),
+                                style: textRegular.copyWith(
+                                  fontSize: 12,
+                                  color: Theme.of(context).textTheme.bodySmall?.color, // Isse dark mode mein light grey/white dikhega
+                                ),
                                 maxLines: 2, // 2 lines rakha hai Latest Product ki tarah
                                 overflow: TextOverflow.ellipsis,
                               ),

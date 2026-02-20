@@ -43,6 +43,8 @@ import 'package:flutter_sixvalley_ecommerce/utill/dimensions.dart';
 import 'package:flutter_sixvalley_ecommerce/utill/images.dart';
 import 'package:provider/provider.dart';
 
+import '../long_banner_widget.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -220,43 +222,79 @@ class _HomePageState extends State<HomePage> {
             ),
 
 
+            // SliverToBoxAdapter(
+            //   child: Consumer<FeaturedDealController>(
+            //       builder: (context, featuredDealProvider, child) {
+            //         return  featuredDealProvider.featuredDealProductList != null? featuredDealProvider.featuredDealProductList!.isNotEmpty ?
+            //         Column(
+            //           children: [
+            //             Stack(children: [
+            //               Container(
+            //                 width: MediaQuery.of(context).size.width,
+            //                 height: 110,
+            //                 // color: Provider.of<ThemeController>(context, listen: false).darkTheme ?
+            //                 // Theme.of(context).highlightColor
+            //                 //     : Theme.of(context).colorScheme.onTertiary,
+            //                 color: Theme.of(context).cardColor,
+            //               ),
+            //
+            //               Column(children: [
+            //                 Padding(
+            //                   padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
+            //                   child: TitleRowWidget(
+            //                     title: '${getTranslated('featured_deals', context)}',
+            //                     onTap: () {
+            //                       RouterHelper.getFeaturedDealScreenViewRoute();
+            //                     },
+            //                   ),
+            //                 ),
+            //
+            //                 const FeaturedDealsListWidget(),
+            //               ]),
+            //             ]),
+            //
+            //             // const SizedBox(height: Dimensions.paddingSizeDefault),
+            //           ],
+            //         ) : const SizedBox.shrink() : const FindWhatYouNeedShimmer();}
+            //   ),
+            // ),
+
             SliverToBoxAdapter(
               child: Consumer<FeaturedDealController>(
-                  builder: (context, featuredDealProvider, child) {
-                    return  featuredDealProvider.featuredDealProductList != null? featuredDealProvider.featuredDealProductList!.isNotEmpty ?
-                    Column(
-                      children: [
-                        Stack(children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 110,
-                            // color: Provider.of<ThemeController>(context, listen: false).darkTheme ?
-                            // Theme.of(context).highlightColor
-                            //     : Theme.of(context).colorScheme.onTertiary,
-                            color: Theme.of(context).cardColor,
+                builder: (context, featuredDealProvider, child) {
+                  return featuredDealProvider.featuredDealProductList != null
+                      ? Column(children: [
+
+                    // ✅ 1. PNG BANNER YAHAN HAI
+                    const LongBannerWidget(
+                      imagePath: 'assets/images/long_banner.png',
+                    ),
+
+                    const SizedBox(height: Dimensions.paddingSizeDefault),
+
+                    // 2. Featured Deals ka purana stack
+                    Stack(children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 110,
+                        color: Theme.of(context).cardColor,
+                      ),
+                      Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
+                          child: TitleRowWidget(
+                            title: '${getTranslated('featured_deals', context)}',
+                            onTap: () => RouterHelper.getFeaturedDealScreenViewRoute(),
                           ),
-
-                          Column(children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
-                              child: TitleRowWidget(
-                                title: '${getTranslated('featured_deals', context)}',
-                                onTap: () {
-                                  RouterHelper.getFeaturedDealScreenViewRoute();
-                                },
-                              ),
-                            ),
-
-                            const FeaturedDealsListWidget(),
-                          ]),
-                        ]),
-
-                        // const SizedBox(height: Dimensions.paddingSizeDefault),
-                      ],
-                    ) : const SizedBox.shrink() : const FindWhatYouNeedShimmer();}
+                        ),
+                        const FeaturedDealsListWidget(),
+                      ]),
+                    ]),
+                  ])
+                      : const FindWhatYouNeedShimmer();
+                },
               ),
             ),
-
 
             SliverToBoxAdapter(
               child: const ClearanceListWidget(),

@@ -494,7 +494,11 @@ class FeaturedProductWidget extends StatelessWidget {
                                             discount: (product.clearanceSale?.discountAmount ?? 0) > 0 ? product.clearanceSale?.discountAmount : product.discount,
                                           ),
                                           // ✅ Bold style aur 16 size as per Latest Product
-                                          style: robotoBold.copyWith(color: Colors.black, fontSize: 16),
+                                          // style: robotoBold.copyWith(color: Colors.black, fontSize: 16),
+                                          style: robotoBold.copyWith(
+                                            color: Theme.of(context).textTheme.bodyLarge?.color, // Isse black background par white dikhega
+                                            fontSize: 16,
+                                          ),
                                         ),
                                       ),
                                       SizedBox(
@@ -509,7 +513,11 @@ class FeaturedProductWidget extends StatelessWidget {
                                   Text(
                                     product.name ?? '',
                                     // ✅ Regular style, 12 size aur grey color
-                                    style: textRegular.copyWith(fontSize: 12, color: Colors.grey[600]),
+                                    // style: textRegular.copyWith(fontSize: 12, color: Colors.grey[600]),
+                                    style: textRegular.copyWith(
+                                      fontSize: 12,
+                                      color: Theme.of(context).textTheme.bodySmall?.color,
+                                    ),
                                     maxLines: 2, // Latest Product ki tarah 2 lines
                                     overflow: TextOverflow.ellipsis,
                                   ),

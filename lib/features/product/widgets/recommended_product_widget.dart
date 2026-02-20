@@ -327,7 +327,7 @@ class RecommendedProductWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault),
                 itemBuilder: (context, index) {
                   return Container(
-                    width: 180,
+                    width: 160,
                     margin: const EdgeInsets.only(right: Dimensions.paddingSizeDefault),
                     child: LatestProductWidget(
                       productModel: product,
