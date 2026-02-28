@@ -395,11 +395,9 @@ class ProductWidget extends StatelessWidget {
             offset: const Offset(0, 2),
           )],
         ),
-        // child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         child: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
 
-          // Symmetric Image Section
           AspectRatio(
             aspectRatio: 1 / 1.25,
             child: Stack(children: [

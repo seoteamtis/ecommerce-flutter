@@ -260,7 +260,6 @@ class RecommendedProductWidget extends StatelessWidget {
     return Consumer<ProductController>(
       builder: (context, recommendedProvider, child) {
 
-        // ERROR FIX: 'recommendedProductModel' ko badal kar 'recommendedProduct' kiya
         final product = recommendedProvider.recommendedProduct;
 
         return (product != null)
@@ -278,7 +277,6 @@ class RecommendedProductWidget extends StatelessWidget {
             ),
             const SizedBox(height: Dimensions.paddingSizeSmall),
 
-            // Black Custom Banner (As per image)
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
@@ -321,7 +319,7 @@ class RecommendedProductWidget extends StatelessWidget {
             SizedBox(
               height: 320,
               child: ListView.builder(
-                itemCount: 1, // Single product deal ke liye
+                itemCount: 1,
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.only(left: Dimensions.paddingSizeDefault),

@@ -648,33 +648,35 @@ class CartBottomSheetWidgetState extends State<CartBottomSheetWidget> {
                       vertical: Dimensions.paddingSizeSmall),
                     child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       
-      
-                      Expanded(child: Consumer<SplashController>(builder: (context, configProvider,_) {
-                        return CustomButton(
-                          isBuy:true, radius: 6,
-                          buttonText: getTranslated(stock == 0  && widget.product!.productType == "physical" ? 'out_of_stock' : 'buy_now', context),
-                          onTap:() async {
-                            final bool isLoggedIn = Provider.of<AuthController>(context, listen: false).isLoggedIn();
-      
-                            if(configProvider.configModel?.guestCheckOut == 0 && !isLoggedIn){
-                              showModalBottomSheet(
-                                backgroundColor: Colors.transparent,
-                                context:context, builder: (_)=> const NotLoggedInBottomSheetWidget(fromPage: RouterHelper.productDetailsScreen),
-                              );
-                            } else if( stock! < widget.product!.minimumOrderQty!  &&  widget.product!.productType == "physical" ) {
-                              showCustomSnackBarWidget(getTranslated('out_of_stock', context), context, snackBarType: SnackBarType.warning);
-                            } else if(stock >= widget.product!.minimumOrderQty! || widget.product!.productType == "digital") {
-                              final ApiResponseModel apiResponse = await  Provider.of<CartController>(context, listen: false).addToCartAPI(
-                                cart, context, widget.product!.choiceOptions!,
-                                productDetailsController.variationIndex, buyNow: 1,
-                              );
-      
-                              if(apiResponse.response?.statusCode == 200){
-                                _onTapBuyNow(cart, Get.context!, widget.product!.choiceOptions!, productDetailsController.variationIndex, apiResponse.response);
-      
-                              }}},
-                        );
-                      })),
+
+                      // Buy now button ------------>
+
+                      // Expanded(child: Consumer<SplashController>(builder: (context, configProvider,_) {
+                      //   return CustomButton(
+                      //     isBuy:true, radius: 6,
+                      //     buttonText: getTranslated(stock == 0  && widget.product!.productType == "physical" ? 'out_of_stock' : 'buy_now', context),
+                      //     onTap:() async {
+                      //       final bool isLoggedIn = Provider.of<AuthController>(context, listen: false).isLoggedIn();
+                      //
+                      //       if(configProvider.configModel?.guestCheckOut == 0 && !isLoggedIn){
+                      //         showModalBottomSheet(
+                      //           backgroundColor: Colors.transparent,
+                      //           context:context, builder: (_)=> const NotLoggedInBottomSheetWidget(fromPage: RouterHelper.productDetailsScreen),
+                      //         );
+                      //       } else if( stock! < widget.product!.minimumOrderQty!  &&  widget.product!.productType == "physical" ) {
+                      //         showCustomSnackBarWidget(getTranslated('out_of_stock', context), context, snackBarType: SnackBarType.warning);
+                      //       } else if(stock >= widget.product!.minimumOrderQty! || widget.product!.productType == "digital") {
+                      //         final ApiResponseModel apiResponse = await  Provider.of<CartController>(context, listen: false).addToCartAPI(
+                      //           cart, context, widget.product!.choiceOptions!,
+                      //           productDetailsController.variationIndex, buyNow: 1,
+                      //         );
+                      //
+                      //         if(apiResponse.response?.statusCode == 200){
+                      //           _onTapBuyNow(cart, Get.context!, widget.product!.choiceOptions!, productDetailsController.variationIndex, apiResponse.response);
+                      //
+                      //         }}},
+                      //   );
+                      // })),
                       const SizedBox(width: Dimensions.paddingSizeDefault),
       
                       Expanded(child: CustomButton(

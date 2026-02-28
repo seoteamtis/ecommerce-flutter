@@ -50,9 +50,24 @@ class PriceConverter {
     return calculatedAmount;
   }
 
+  // static String percentageCalculation(BuildContext context, double? price, double? discount, String? discountType) {
+  //   return '-${(discountType == 'percent' || discountType == 'percentage') ? '${discount?.toStringAsFixed(Provider.of<SplashController>(context,listen: false).configModel!.decimalPointSettings??1)} %'
+  //     : convertPrice(context, discount)}';
+  // }
+
+  // percentage calculation----------------------->
+
   static String percentageCalculation(BuildContext context, double? price, double? discount, String? discountType) {
-    return '-${(discountType == 'percent' || discountType == 'percentage') ? '${discount?.toStringAsFixed(Provider.of<SplashController>(context,listen: false).configModel!.decimalPointSettings??1)} %'
-      : convertPrice(context, discount)}';
+    double percentage = 0;
+
+    if(discountType == 'percent' || discountType == 'percentage') {
+      percentage = discount ?? 0;
+    } else {
+      if (price != null && price != 0 && discount != null) {
+        percentage = (discount * 100) / price;
+      }
+    }
+    return '-${percentage.round()}%';
   }
 
   static String getUnitCurrency (BuildContext context, double? price) {

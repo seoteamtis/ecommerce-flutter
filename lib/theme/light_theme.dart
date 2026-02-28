@@ -85,7 +85,9 @@ ThemeData light({Color? primaryColor, Color? secondaryColor}) => ThemeData(
     onPrimary: const Color(0xFF7FBBFF),
     surface: const Color(0xFFF4F8FF),
     onSecondary: secondaryColor ?? const Color(0xFFF88030),
-    error: const Color(0xFFFF4040),
+    // error: const Color(0xFFFF4040),
+    // discount bg color------------------>
+    error: const Color(0xFF3B2A70),
     onSecondaryContainer: const Color(0xFFF3F9FF),
     outline: const Color(0xff5C8FFC),
     onTertiary: const Color(0xFFE9F3FF),

@@ -265,14 +265,12 @@ class _HomePageState extends State<HomePage> {
                   return featuredDealProvider.featuredDealProductList != null
                       ? Column(children: [
 
-                    // ✅ 1. PNG BANNER YAHAN HAI
                     const LongBannerWidget(
                       imagePath: 'assets/images/long_banner.png',
                     ),
 
                     const SizedBox(height: Dimensions.paddingSizeDefault),
 
-                    // 2. Featured Deals ka purana stack
                     Stack(children: [
                       Container(
                         width: MediaQuery.of(context).size.width,
